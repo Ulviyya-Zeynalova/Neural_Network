@@ -23,11 +23,11 @@ double sigmoida2(double x) {
     double s=sigmoida(x);
     return s*(1.0-s);
 	}
-vector<point> read(const string &file) { ///чтение из файла
+vector<point> read(const string &file) {
     vector<point> vec;
     ifstream f(file);
     if (!f) {
-        cout<<"ошибка открытия файла"<<endl;
+        cout<<"Failed to open file"<<endl;
         return vec;
 		}
     point p;
@@ -58,7 +58,7 @@ void normirovka(double &x, double &y, const norm &obb) {
     x=2.0*(x-obb.xmin)/dx-1.0;
     y=2.0*(y-obb.ymin)/dy-1.0;
 	}	
-void split(vector<point> &alldata, vector<point> &traindata, vector<point> &validdata) { ///делим на обучающую и валидационную 
+void split(vector<point> &alldata, vector<point> &traindata, vector<point> &validdata) { 
     random_device rd;
     mt19937 g(rd());
     shuffle(alldata.begin(), alldata.end(), g);
@@ -196,45 +196,6 @@ void start(ofstream &f) {
         <<"plot \"pointnew.txt\" using 1:2:3 with points pt 7 ps 0.1 lc palette"<<endl;
         }
 
-/*void gen(int size,double cx0,double cy0,double a0,double cx1,double cy1,double a1) { 
-	ofstream f("point.txt"); 
-	int class_l;
-	for(int i=0;i<size;i++) {
-		class_l=rand()%2;
-		if(class_l==0) {
-			f<<cx0-a0/2+a0*((double)rand()/RAND_MAX)<<" "<<
-			cy0-a0/2+a0*((double)rand()/RAND_MAX)<<" "<<class_l<<endl;
-			}
-		else {
-			f<<cx1-a1/2+a1*((double)rand()/RAND_MAX)<<" "<<
-			cy1-a1/2+a1*((double)rand()/RAND_MAX)<<" "<<class_l<<endl;
-			}
-		}
-	}
-void gen(int n0, int n1, double R, double a) {
-    ofstream f("point.txt");
-    mt19937 gen(random_device{}());
-    uniform_real_distribution<> dist(-a,a);
-    int count=0;
-    while (count<n0) {
-        double x=dist(gen);
-        double y=dist(gen);
-        if (x*x+y*y<=R*R) {
-            f<<x<<" "<<y<<" "<<0<<endl;
-            count++;
-			}
-		}
-    count=0;
-    while (count<n1) {
-        double x=dist(gen);
-        double y=dist(gen);
-        if (x*x+y*y>R*R) {
-            f<<x<<" "<<y<<" "<<1<<endl;
-            count++;
-			}
-		}
-	}*/
-
 void gen(int n0, int n1, double h, double w, double a) {
     ofstream f("point.txt");
     random_device rd;
@@ -268,15 +229,14 @@ void gen(int n0, int n1, double h, double w, double a) {
 	
 int main() {
 	int size;
-	cout<<"введите количество точек:"<<endl;
+	cout<<"type the number of dots:"<<endl;
 	cin>>size;
-	///double cx0=-0.8, cy0=-1, a0=2, cx1=1, cy1=1, a1=2;
-	///gen(size,cx0,cy0,a0,cx1,cy1,a1);
+	
 	double h=0.4,a=1,w=2;
 	gen(size/2,size/2,h,w,a);
 	vector<point> alldata=read("point.txt");
     if (alldata.empty()) {
-        cout<<"файл пуст"<<endl;
+        cout<<"file is empty"<<endl;
         return 1;
 		}
 	ofstream file("pointnew.txt");
