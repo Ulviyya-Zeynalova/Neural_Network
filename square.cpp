@@ -23,11 +23,11 @@ double sigmoida2(double x) {
     double s=sigmoida(x);
     return s*(1.0-s);
 	}
-vector<point> read(const string &file) { ///чтение из файла
+vector<point> read(const string &file) { 
     vector<point> vec;
     ifstream f(file);
     if (!f) {
-        cout<<"ошибка открытия файла"<<endl;
+        cout<<"Failed to open file"<<endl;
         return vec;
 		}
     point p;
@@ -58,7 +58,7 @@ void normirovka(double &x, double &y, const norm &obb) {
     x=2.0*(x-obb.xmin)/dx-1.0;
     y=2.0*(y-obb.ymin)/dy-1.0;
 	}	
-void split(vector<point> &alldata, vector<point> &traindata, vector<point> &validdata) { ///делим на обучающую и валидационную 
+void split(vector<point> &alldata, vector<point> &traindata, vector<point> &validdata) { 
     random_device rd;
     mt19937 g(rd());
     shuffle(alldata.begin(), alldata.end(), g);
@@ -213,13 +213,13 @@ void gen(int size,double cx0,double cy0,double a0,double cx1,double cy1,double a
 	}	
 int main() {
 	int size;
-	cout<<"введите количество точек:"<<endl;
+	cout<<"type the number of dots:"<<endl;
 	cin>>size;
 	double cx0=0,cy0=1,a0=2,cx1=2.0,cy1=2.6,a1=2;
 	gen(size,cx0,cy0,a0,cx1,cy1,a1);
 	vector<point> alldata=read("point.txt");
     if (alldata.empty()) {
-        cout<<"файл пуст"<<endl;
+        cout<<"file is empty"<<endl;
         return 1;
 		}
 	ofstream file("pointnew.txt");
